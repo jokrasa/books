@@ -62,7 +62,7 @@ public class JpaBookService implements BookService {
   	      predList.add(cb.equal(b.get("genre"), genre));
   		}
 		if((!pages.equals("")) && (!pages.equals("undefined"))){
-  	      predList.add(cb.equal(b.get("pages"), pages));
+  	      predList.add(cb.lessThanOrEqualTo(b.get("pages"), pages));
   		}
 		if((!year.equals("")) && (!year.equals("undefined"))){
   	      predList.add(cb.equal(b.get("year"), year));
