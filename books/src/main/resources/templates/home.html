@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+  <head>
+    <title>Spring Boot books</title>
+    	<link rel="stylesheet" th:href="@{/style.css}" />
+        <script type="text/javascript" src="js/angular.min.js"></script> 
+        <script src="js/main.js"></script>
+  </head>
+
+  <body>
+    <h2>Books Home</h2>
+
+						   
+    <form method="POST">
+      <label for="title">Book:</label>
+      <input type="text" name="title"></input><br/>    
+      <label for="author">Author:</label>
+      <input type="text" name="author"></input><br/>
+      <label for="genre">Genre:</label>
+      <input type="text" name="genre"></input><br/>
+      <label for="pages">Page #:</label>
+      <input type="text" name="pages"></input><br/>
+      <label for="year">Year:</label>
+      <input type="text" name="year"></input><br/>
+      <label for="rating">Rating:</label>
+      <input type="text" name="rating"></input><br/>
+      <input type="submit"></input>
+    </form>
+    
+    
+
+    <ul th:each="book : ${books}">
+      <li>
+        <span th:text="${book.title}">Title</span>
+        <span th:text="${book.author}">Author</span>
+        <span th:text="${book.genre}">Genre</span> :
+        <span th:text="${book.pages}">pages</span>,
+        <span th:text="${book.year}">year</span>
+        <span th:text="${book.rating}">rating</span>
+
+      </li>
+    </ul>
+    
+   
+    <a th:href="@{/search}">SEARCH</a>
+    
+  </body>
+</html>

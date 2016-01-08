@@ -1,0 +1,31 @@
+body {
+	background-color: #eeeeee;
+	font-family: sans-serif;
+}
+
+label {
+	display: inline-block;
+	width: 120px;
+	text-align: right;
+}
+
+div.solid {
+/* 		position: relative; */
+	border-style: solid;
+
+}
+
+span.solid {
+/* 		position: absolute; */
+	border-style: solid;
+	float: center;
+	width: 150px;
+
+	height: 70px;
+}
+
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    width: 600px; 
+    height: 300px;
+}

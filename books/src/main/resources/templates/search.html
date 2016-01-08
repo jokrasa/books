@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" ng-app="myApp" >
+  <head>
+    <title>Spring Boot search</title>
+    	<link rel="stylesheet" type="text/css" th:href="@{js/ng_grid/ng-grid.css}" />
+    	
+		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="js/angular.min.js"></script> 
+		<script type="text/javascript" src="js/ng_grid/ng-grid-2.0.14.min.js"></script>
+		<script src="js/restangular.js"></script> 
+		<script src="js/underscore-min.js"></script>                     
+
+  <link href="style.css" th:href="@{/style.css}" />
+  <script src="js/main.js"></script>   	
+  </head>
+
+  <body ng-controller="gridCtrl">
+    <h2>Result</h2>
+
+
+<!-- <form id = "sch" action="#" th:action="@{/search}" th:object="${book}" method="post"> -->
+
+<form id = "sch" th:object="${book}" method="post" ng-controller="searchController" ng-submit="processUpdateForm()">
+
+ 			<!-- table -->
+			<table border="1">
+				<!-- 1tr -->
+				<tr >
+					<td></td>
+					<td align="center">
+								<label>Author</label>
+		 					    <select th:field="*{author}" ng-model="bookData.author" >
+							  	<option selected="selected" value=""> -- select an option -- </option>
+							  	<option th:each="author: ${authors}" 
+							          th:value="${author}" 
+							          th:text="${author}">Author</option>
+								</select>					
+						 
+					</td>
+					<td align="center"> 
+ 						
+						<label th:for="*{genre}">Genre</label>
+ 					    <select th:field="*{genre}"  ng-model="bookData.genre">
+ 					    <option selected="selected" value=""> -- select an option -- </option>
+					  	<option th:each="genre: ${genres}" 
+					          th:value="${genre}" 
+					          th:text="${genre}">Genres</option>
+						</select>
+					</td>
+					<td align="center">												
+						  
+ 							<label th:for="*{pages}">Pages</label>
+	 					    <select th:field="*{pages}"  ng-model="bookData.pages">
+	 					    <option selected="selected" value=""> -- select an option -- </option>
+						  	<option th:each="selectItem: ${refData.pages}" 
+						          th:value="${selectItem.value}" 
+						          th:text="${selectItem.label}">Pages</option>
+							</select> 
+					</td>
+					<td align="center">	
+						
+						<label th:for="*{year}">Year</label>
+					    <select th:field="*{year}"  ng-model="bookData.year">
+ 					    <option selected="selected" value=""> -- select an option -- </option>
+					  	<option th:each="selectItem: ${refData.years}" 
+					          th:value="${selectItem.value}" 
+					          th:text="${selectItem.label}">year</option>
+						</select>
+					</td>
+					<td align="center">		 
+						
+						
+							<label th:for="*{rating}">rating</label>
+							<select th:field="*{rating}"  ng-model="bookData.rating">
+	 					    <option selected="selected" value=""> -- select an option -- </option>
+						  	<option th:each="selectItem: ${refData.rating}" 
+						          th:value="${selectItem.value}" 
+						          th:text="${selectItem.label}">rating</option>
+							</select>
+					</td>
+				</tr>
+				<!-- close  5tr -->								
+			 </table>
+			 <!-- close table --> 
+	  
+                    					   
+<input type="submit" value="Submit" />
+
+
+
+
+    </form>
+   
+<div  class="gridStyle" ng-grid="gridOptions" ></div>
+    <ul th:each="book : ${books}" >
+      <li>
+      	<span th:text="UPDATE" style="cursor: pointer" th:onclick="'javascript:updateClicked(\'' + ${book.id} + '\');'">UPDATE</span>
+        <span th:text="${book.title}">Title</span>
+        <span th:text="${book.author}">Author</span>
+        <span th:text="${book.genre}">Genre</span> :
+        <span th:text="${book.pages}">pages</span>,
+        <span th:text="${book.year}">year</span>
+        <span th:text="${book.rating}">rating</span>
+		<span th:text="DELETE" style="cursor: pointer" th:onclick="'javascript:deleteClicked(\'' + ${book.id} + '\');'">DELETE</span>
+      </li>
+    </ul>
+  
+
+   
+       <a th:href="@{/}">ADD NEW BOOK</a>
+    
+  </body>
+</html>
