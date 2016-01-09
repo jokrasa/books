@@ -55,7 +55,10 @@ app.controller('searchController', function($scope, $http, $location,
 		var aData = $scope.bookData.author;
 		var gData = $scope.bookData.genre;
 		var pData = $scope.bookData.pages;
-		//var pDataInt = parseInt(pData);
+//		console.log(">>>>>>>>>>>>>>>>pData.valueOf() " + pData.valueOf());
+		if(typeof pData === 'undefined'){
+			pData='0';
+		}
 		var yData = $scope.bookData.year;
 		var rData = $scope.bookData.rating;
 		//var href = $scope.bookData.href;
@@ -100,14 +103,18 @@ app.controller('addController', function($scope, $http, $location,
 		// data from the form works !!
 		var aData = $scope.bookData.author;
 		var gData = $scope.bookData.genre;
-		var pData = $scope.bookData.pages;
+			var pData = $scope.bookData.pages;
+			console.log(">>>>>>>>>>>>>>>>pData.valueOf() " + pData.valueOf());
+			if(pData.valueOf()==="undefined" || pData.valueOf()===("")){
+				pData='0';
+			}
 		var yData = $scope.bookData.year;
 		var rData = $scope.bookData.rating;
 		//var href = $scope.bookData.href;
 
 		console.log(">>>>>>>>>>>>>>>>aData" + aData);
 		console.log(">>>>>>>>>>>>>>>>gData" + gData);
-		console.log(">>>>>>>>>>>>>>>>pData" + pData);
+		console.log(">>>>>>>>>>>>>>>>pData: " + pData);
 		console.log(">>>>>>>>>>>>>>>>yData" + yData);
 		console.log(">>>>>>>>>>>>>>>>rData" + rData);
  

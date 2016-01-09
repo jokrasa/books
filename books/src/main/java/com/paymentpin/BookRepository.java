@@ -52,7 +52,7 @@ public interface BookRepository extends CrudRepository<Book, String> {
     		+ "and b.pages = ?3 "
     		+ "and b.year =  ?4 "
     		+ "and b.rating = ?5 ")   
-    List<Book> findAllBySearch(@Param("author") String author,@Param("genre") String genre,@Param("pages") String pages,
+    List<Book> findAllBySearch(@Param("author") String author,@Param("genre") String genre,@Param("pages") Integer pages,
     					@Param("year") String year,
     					@Param("rating") String rating);
     
@@ -69,7 +69,7 @@ public interface BookRepository extends CrudRepository<Book, String> {
     
     @Modifying
     @Query("update Book b set b.title = ?1, b.author = ?2, b.genre = ?3, b.pages = ?4, b.year = ?5, b.rating = ?6 where b.id = ?7")
-    void updateBookInfoById(String title, String author, String genre,String pages, String year, String rating,Integer id);
+    void updateBookInfoById(String title, String author, String genre,Integer pages, String year, String rating,Integer id);
    
     
 

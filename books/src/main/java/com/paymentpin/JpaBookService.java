@@ -39,7 +39,7 @@ public class JpaBookService implements BookService {
 		this.em = em;
 	}
 
-	public List<Book> searchBooks(String author, String genre, String pages, String year, String rating){
+	public List<Book> searchBooks(String author, String genre, Integer pages, String year, String rating){
     	System.out.println(">>>>>JpaBookService.searchBooks");
     	List<Predicate> predList = new LinkedList<Predicate>();
     	
@@ -49,8 +49,7 @@ public class JpaBookService implements BookService {
 			System.out.println(">>>>>year is: "+year);
 			System.out.println(">>>>>rating is: "+rating);
 
-		    Metamodel metamodel = em.getMetamodel();	
-		    EntityType<Integer> IntClass = metamodel.entity(Integer.class); 
+
 		    
        	CriteriaBuilder cb = em.getCriteriaBuilder();
     	CriteriaQuery<Book> c =cb.createQuery(Book.class);
@@ -58,21 +57,13 @@ public class JpaBookService implements BookService {
   
 	
 		if((!author.equals("")) && (!author.equals("undefined"))){
-	    	System.out.println(">>>>>b.get('author'):"+b.get("author"));
-
 	      predList.add(cb.equal(b.get("author"), author));
 		}
 		if((!genre.equals("")) && (!genre.equals("undefined"))){
   	      predList.add(cb.equal(b.get("genre"), genre));
   		}
-		if((!pages.equals("")) && (!pages.equals("undefined"))){
-  	      //predList.add(cb.lessThanOrEqualTo(b.get("pages"), pages));
-			//ParameterExpression<Integer> Int1 = cb.parameter(Integer.class, b.get("pages").toString());
-		       Integer Int1= Integer.valueOf( b.get("pages").toString() );
-		       Integer Int2 = Integer.valueOf( pages );
-
-		    //ParameterExpression<Integer> Int2 = cb.parameter(Integer.class, pages);
-			predList.add(cb.le(	 Int1, Int2 )); 
+		if( pages!=0){
+  	      predList.add(cb.lessThanOrEqualTo(b.get("pages"), pages));
   		}
 		if((!year.equals("")) && (!year.equals("undefined"))){
   	      predList.add(cb.equal(b.get("year"), year));
@@ -94,8 +85,6 @@ public class JpaBookService implements BookService {
 		for(Book book: result){
 			System.out.println(">>>>>>>FINALLY a BOOK?! "+book.getTitle());
 		}
-
-
 
 		return result;
 	

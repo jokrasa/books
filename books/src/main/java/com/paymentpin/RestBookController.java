@@ -55,7 +55,7 @@ public class RestBookController {
 	@ResponseBody
 	public List<Book> searchBooks(@PathVariable String author,
 								  @PathVariable String genre,
-								  @PathVariable String pages,
+								  @PathVariable Integer pages,
 								  @PathVariable String year,
 								  @PathVariable String rating) {
 		System.out.println(">>>>>>>>restContr searchBooks");

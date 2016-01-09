@@ -51,8 +51,9 @@
 						  
  							<label th:for="*{pages}">Pages</label>
 	 					    <select th:field="*{pages}"  ng-model="bookData.pages">
-	 					    <option selected="selected" value="">  select an option  </option>
-						  	<option th:each="selectItem: ${refData.pages}" 
+	 					    <option disabled="disabled" selected="selected" value="">  select an option  </option>
+						  	<option th:each="selectItem: ${refData.pages}"
+				  		  
 						          th:value="${selectItem.value}" 
 						          th:text="${selectItem.label}">Pages</option>
 							</select> 

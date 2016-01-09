@@ -17,7 +17,7 @@ public final class Book
 	private String title;
 	private String author;
     private String genre;
-    private String pages;
+    private Integer pages;
     private String year;
     private String rating;
     
@@ -49,10 +49,10 @@ public final class Book
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
-	public String getPages() {
+	public Integer getPages() {
 		return pages;
 	}
-	public void setPages(String pages) {
+	public void setPages(Integer pages) {
 		this.pages = pages;
 	}
 	public String getYear() {

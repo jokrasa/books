@@ -6,7 +6,7 @@ import com.paymentpin.entity.Book;
 
 public interface BookService {
 	
-    public List<Book> searchBooks(String author, String genre, String pages, String year, String rating);
+    public List<Book> searchBooks(String author, String genre, Integer pages, String year, String rating);
 
 
 }
