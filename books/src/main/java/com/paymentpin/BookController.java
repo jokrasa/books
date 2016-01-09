@@ -39,30 +39,28 @@ public class BookController {
 	
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String home(Map<String,Object> model) {
+	public String home(Model model) {
 		
 		System.out.println("HOME>>>>>>>>>>>>");
 		
+		refData = new ReferenceData();
+		model.addAttribute("refData", refData);
+		
+		model.addAttribute("book", new Book());
+		
 		List<Book> books = BookRepo.findAll();
-		model.put("books", books);
+		model.addAttribute("books", books);
 		for(Book b : books){
 			 System.out.println("book = "+b.getTitle());
 		}
 		
-//	    ArrayList<String> authors = BookRepo.findAllDistinctAuthor();
-//		model.put("authors",authors);
-//		
-//	    ArrayList<String> genres = BookRepo.findAllDistinctGenre();		
-//		model.put("genres",genres);
-//		
-//		refData = new ReferenceData();
-//		model.put("refData", refData);
+
 
 		return "home";
 	}	
 
 	@RequestMapping(method=RequestMethod.POST)
-	public String submit(Book book) {
+	public String submit(Book book,Model model) {
 		
 		//TEST the book....
 		System.out.println("title="+book.getTitle());
@@ -71,6 +69,9 @@ public class BookController {
 		System.out.println("pages="+book.getPages());
 		System.out.println("rating="+book.getRating());
 		System.out.println("year="+book.getYear());
+		
+		refData = new ReferenceData();
+		model.addAttribute("refData", refData);
 		
 		BookRepo.save(book);
 		return "redirect:/";
@@ -87,9 +88,6 @@ public class BookController {
 		
 	    ArrayList<String> genres = BookRepo.findAllDistinctGenre();		
 		model.addAttribute("genres",genres);
-		
-	    ArrayList<String> years = BookRepo.findAllDistinctYear();		
-		model.addAttribute("years",years);		
 		
 		refData = new ReferenceData();
 		model.addAttribute("refData", refData);
@@ -123,27 +121,17 @@ public class BookController {
 		
 	    ArrayList<String> genres = BookRepo.findAllDistinctGenre();		
 		model.addAttribute("genres",genres);
-		
-	    ArrayList<String> years = BookRepo.findAllDistinctYear();		
-		model.addAttribute("years",years);
-		
+	
 		refData = new ReferenceData();
 		model.addAttribute("refData", refData);
  
-		/* Query Builder Strategy Pattern 
-		 * 
-		 *   takes BookRepo and a book returns List of books  
-		 *   
-		 *   */
+
 List<Book> books = bs.searchBooks(book.getAuthor(), book.getGenre(), book.getPages(), book.getYear(), book.getRating());
 System.out.println("after books = bs.searchBooks");
-		//List<Book> books = BookRepo.findAllWhereLikeOrderBy(book.getAuthor(), book.getGenre());
 		
 		
-		//Map<String,Object> model = new HashMap<String, Object>();
 		model.addAttribute("books", books);
 		
-		//System.out.println(books.size());
 		if(books!=null){
 			for(Book b : books){
 				System.out.println(b.getTitle());
@@ -160,13 +148,19 @@ System.out.println("after books = bs.searchBooks");
 	// new endpoint for READ....
 	
 	@RequestMapping(value="/update",method=RequestMethod.GET)
-	public String update(@RequestParam int id,Map<String,Object> model) {
+	public String update(@RequestParam int id,Model model){			//Map<String,Object> model) {
 		
 		System.out.println("UPDATE GET>>>>>>>>>>>>");
 		
 		List<Book> books = BookRepo.findById(id);
 		Book book = books.remove(0);
-		model.put("book", book);
+		
+		refData = new ReferenceData();
+		model.addAttribute("refData", refData);
+		
+		model.addAttribute("book", book);		
+		
+		///model.put("book", book);
 		System.out.println("book.getTitle()="+book.getTitle());
 
 
@@ -187,6 +181,8 @@ System.out.println("after books = bs.searchBooks");
 		System.out.println("rating="+book.getRating());
 		System.out.println("year="+book.getYear());
 		System.out.println("id="+book.getId());
+		
+		
 		
 		BookRepo.updateBookInfoById(book.getTitle(), book.getAuthor(), book.getGenre(), book.getPages(), book.getYear(), book.getRating(),book.getId());
 		return "redirect:/search";

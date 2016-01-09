@@ -13,6 +13,8 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
@@ -47,7 +49,9 @@ public class JpaBookService implements BookService {
 			System.out.println(">>>>>year is: "+year);
 			System.out.println(">>>>>rating is: "+rating);
 
-    	
+		    Metamodel metamodel = em.getMetamodel();	
+		    EntityType<Integer> IntClass = metamodel.entity(Integer.class); 
+		    
        	CriteriaBuilder cb = em.getCriteriaBuilder();
     	CriteriaQuery<Book> c =cb.createQuery(Book.class);
     	Root<Book> b = c.from(Book.class);
@@ -62,7 +66,13 @@ public class JpaBookService implements BookService {
   	      predList.add(cb.equal(b.get("genre"), genre));
   		}
 		if((!pages.equals("")) && (!pages.equals("undefined"))){
-  	      predList.add(cb.lessThanOrEqualTo(b.get("pages"), pages));
+  	      //predList.add(cb.lessThanOrEqualTo(b.get("pages"), pages));
+			//ParameterExpression<Integer> Int1 = cb.parameter(Integer.class, b.get("pages").toString());
+		       Integer Int1= Integer.valueOf( b.get("pages").toString() );
+		       Integer Int2 = Integer.valueOf( pages );
+
+		    //ParameterExpression<Integer> Int2 = cb.parameter(Integer.class, pages);
+			predList.add(cb.le(	 Int1, Int2 )); 
   		}
 		if((!year.equals("")) && (!year.equals("undefined"))){
   	      predList.add(cb.equal(b.get("year"), year));

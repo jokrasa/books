@@ -21,10 +21,27 @@
       <input type="text" name="genre" id="genre" th:field= "*{genre}" ng-model="genre"/> <br/>
       <label for="pages">Page #:</label>
       <input type="text" name="pages" id="pages" th:field= "*{pages}" ng-model="pages"/> <br/>
-      <label for="year">Year:</label>
-      <input type="text" name="year" id="year" th:field= "*{year}" ng-model="year"/> <br/>
-      <label for="rating">Rating:</label>
-      <input type="text" name="rating" id="rating" th:field= "*{rating}" ng-model="rating"/> <br/>
+<!--       <label for="year">Year:</label> -->
+<!--       <input type="text" name="year" id="year" th:field= "*{year}" ng-model="year"/> <br/> -->
+<!--       <label for="rating">Rating:</label> -->
+<!--       <input type="text" name="rating" id="rating" th:field= "*{rating}" ng-model="rating"/> <br/> -->
+      
+		<label th:for="*{year}">Year</label>
+		
+	    <select th:field="*{year}" ng-model="year">
+	  	<option th:each="selectItem: ${refData.years}" 
+	          th:value="${selectItem.value}" 
+	          th:text="${selectItem.label}">year</option>
+		</select>			
+		
+			<label th:for="*{rating}">rating</label>
+			<select th:field="*{rating}" ng-model="year">
+		  	<option th:each="selectItem: ${refData.rating}" 
+		          th:value="${selectItem.value}" 
+		          th:text="${selectItem.label}">rating</option>
+			</select>      
+      
+      
       <input type="submit"></input>
     </form>
     

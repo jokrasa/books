@@ -48,8 +48,54 @@ app.controller('searchController', function($scope, $http, $location,
 	// $location.path("/search");
 	// }
 
-	$scope.processUpdateForm = function() {
-		console.log(">>>>>>>>>>>>>>>>processUpdateForm");
+	$scope.processSearchForm = function() {
+		console.log(">>>>>>>>>>>>>>>>processSearchForm");
+		//$scope.bookData.href = "'/books/update?id="+$scope.bookData.id+"'";
+		// data from the form works !!
+		var aData = $scope.bookData.author;
+		var gData = $scope.bookData.genre;
+		var pData = $scope.bookData.pages;
+		//var pDataInt = parseInt(pData);
+		var yData = $scope.bookData.year;
+		var rData = $scope.bookData.rating;
+		//var href = $scope.bookData.href;
+
+		console.log(">>>>>>>>>>>>>>>>aData" + aData);
+		console.log(">>>>>>>>>>>>>>>>gData" + gData);
+		console.log(">>>>>>>>>>>>>>>>pData" + pData);
+		console.log(">>>>>>>>>>>>>>>>yData" + yData);
+		console.log(">>>>>>>>>>>>>>>>rData" + rData);
+
+
+		Restangular.all(
+				'books/rest/' + aData + '/' + gData + '/' + pData + '/' + yData
+						+ '/' + rData).getList().then(
+				function(result) {
+					$scope.books = result;
+					console.log(">>>>>>>>>>>>>>>>books: "
+							+ angular.toJson($scope.books, 2));
+					bookData = angular.toJson($scope.books, 2);
+					// add the href to the result here somehow...
+
+					$scope.$emit('bookData', result);
+					$scope.bookData = {};
+				});
+
+	}
+});
+
+
+app.controller('addController', function($scope, $http, $location,
+		Restangular) {
+
+	$scope.bookData = {};
+
+	// $scope.listView = function(){
+	// $location.path("/search");
+	// }
+
+	$scope.processAddForm = function() {
+		console.log(">>>>>>>>>>>>>>>>processAddForm");
 		//$scope.bookData.href = "'/books/update?id="+$scope.bookData.id+"'";
 		// data from the form works !!
 		var aData = $scope.bookData.author;
@@ -64,7 +110,7 @@ app.controller('searchController', function($scope, $http, $location,
 		console.log(">>>>>>>>>>>>>>>>pData" + pData);
 		console.log(">>>>>>>>>>>>>>>>yData" + yData);
 		console.log(">>>>>>>>>>>>>>>>rData" + rData);
-
+ 
 
 		Restangular.all(
 				'books/rest/' + aData + '/' + gData + '/' + pData + '/' + yData

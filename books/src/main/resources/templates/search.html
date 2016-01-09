@@ -20,7 +20,7 @@
 
 <!-- <form id = "sch" action="#" th:action="@{/search}" th:object="${book}" method="post"> -->
 
-<form id = "sch" th:object="${book}" method="post" ng-controller="searchController" ng-submit="processUpdateForm()">
+<form id = "search" th:object="${book}" method="post" ng-controller="searchController" ng-submit="processSearchForm()">
 
  			<!-- table -->
 			<table border="1">
@@ -30,7 +30,7 @@
 					<td align="center">
 								<label>Author</label>
 		 					    <select th:field="*{author}" ng-model="bookData.author" >
-							  	<option selected="selected" value=""> -- select an option -- </option>
+							  	<option selected="selected" value="">  select an option  </option>
 							  	<option th:each="author: ${authors}" 
 							          th:value="${author}" 
 							          th:text="${author}">Author</option>
@@ -41,7 +41,7 @@
  						
 						<label th:for="*{genre}">Genre</label>
  					    <select th:field="*{genre}"  ng-model="bookData.genre">
- 					    <option selected="selected" value=""> -- select an option -- </option>
+ 					    <option selected="selected" value="">  select an option  </option>
 					  	<option th:each="genre: ${genres}" 
 					          th:value="${genre}" 
 					          th:text="${genre}">Genres</option>
@@ -51,7 +51,7 @@
 						  
  							<label th:for="*{pages}">Pages</label>
 	 					    <select th:field="*{pages}"  ng-model="bookData.pages">
-	 					    <option selected="selected" value=""> -- select an option -- </option>
+	 					    <option selected="selected" value="">  select an option  </option>
 						  	<option th:each="selectItem: ${refData.pages}" 
 						          th:value="${selectItem.value}" 
 						          th:text="${selectItem.label}">Pages</option>
@@ -60,8 +60,8 @@
 					<td align="center">	
 						
 						<label th:for="*{year}">Year</label>
-					    <select th:field="*{year}"  ng-model="bookData.year">
- 					    <option selected="selected" value=""> -- select an option -- </option>
+					    <select th:field="*{year}" ng-model="bookData.year">
+ 					    <option selected="selected" value="">  select an option  </option>
 					  	<option th:each="selectItem: ${refData.years}" 
 					          th:value="${selectItem.value}" 
 					          th:text="${selectItem.label}">year</option>
@@ -72,7 +72,7 @@
 						
 							<label th:for="*{rating}">rating</label>
 							<select th:field="*{rating}"  ng-model="bookData.rating">
-	 					    <option selected="selected" value=""> -- select an option -- </option>
+	 					    <option selected="selected" value="">  select an option  </option>
 						  	<option th:each="selectItem: ${refData.rating}" 
 						          th:value="${selectItem.value}" 
 						          th:text="${selectItem.label}">rating</option>

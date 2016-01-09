@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org" ng-app="myApp" >
   <head>
     <title>Spring Boot books</title>
     	<link rel="stylesheet" th:href="@{/style.css}" />
@@ -11,19 +11,42 @@
     <h2>Books Home</h2>
 
 						   
-    <form method="POST">
+<!--     <form id = "add" th:object="${book}" method="post" ng-controller="addController" ng-submit="processAddForm()"> -->
+
+    <form id="add" class="css-form" th:object="${book}" method="post" ng-controller="addController" novalidate="novalidate">
+      
       <label for="title">Book:</label>
-      <input type="text" name="title"></input><br/>    
+      <input type="text" name="title" ng-model="book.title" required="required"></input><br/>    
       <label for="author">Author:</label>
       <input type="text" name="author"></input><br/>
       <label for="genre">Genre:</label>
       <input type="text" name="genre"></input><br/>
       <label for="pages">Page #:</label>
       <input type="text" name="pages"></input><br/>
-      <label for="year">Year:</label>
-      <input type="text" name="year"></input><br/>
-      <label for="rating">Rating:</label>
-      <input type="text" name="rating"></input><br/>
+<!--       <label for="year">Year:</label> -->
+<!--       <input type="text" name="year"></input><br/> -->
+<!--       <label for="rating">Rating:</label> -->
+<!--       <input type="text" name="rating"></input><br/> -->
+
+
+		<label th:for="*{year}">Year</label>
+		
+	    <select th:field="*{year}" ng-model="bookData.year">
+	  	<option th:each="selectItem: ${refData.years}" 
+	          th:value="${selectItem.value}" 
+	          th:text="${selectItem.label}">year</option>
+		</select>			
+		
+			<label th:for="*{rating}">rating</label>
+			<select th:field="*{rating}" ng-model="bookData.rating">
+		  	<option th:each="selectItem: ${refData.rating}" 
+		          th:value="${selectItem.value}" 
+		          th:text="${selectItem.label}">rating</option>
+			</select>
+			
+
+			
+			
       <input type="submit"></input>
     </form>
     
