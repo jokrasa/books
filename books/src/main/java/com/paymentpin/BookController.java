@@ -4,15 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.paymentpin.entity.Book;
 
@@ -20,7 +25,7 @@ import com.paymentpin.entity.Book;
 
 @Controller
 @RequestMapping("/")
-public class BookController {
+public class BookController{	//extends WebMvcConfigurerAdapter {
 	
 	private BookService bs;
 
@@ -35,7 +40,10 @@ public class BookController {
 	}
 	
 
-
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/home").setViewName("home");
+//    }
 	
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -53,15 +61,13 @@ public class BookController {
 		for(Book b : books){
 			 System.out.println("book = "+b.getTitle());
 		}
-		
-
 
 		return "home";
 	}	
 
 	@RequestMapping(method=RequestMethod.POST)
-	public String submit(Book book,Model model) {
-		
+	public String submit(@Valid Book book,BindingResult bindingResult, Model model ) {
+		System.out.println(">>>>>>>>submit(@Valid Book book,Model model, BindingResult bindingResult)");
 		//TEST the book....
 		System.out.println("title="+book.getTitle());
 		System.out.println("author="+book.getAuthor());
@@ -70,8 +76,17 @@ public class BookController {
 		System.out.println("rating="+book.getRating());
 		System.out.println("year="+book.getYear());
 		
+		
 		refData = new ReferenceData();
 		model.addAttribute("refData", refData);
+		
+        if (bindingResult.hasErrors()) {
+        	System.out.println(">>>>>>>>bindingResult.HAS Errors()");
+            return "home";
+        }
+        else{
+        	System.out.println(">>>>>>>>bindingResult.NO Errors()");
+        }
 		
 		BookRepo.save(book);
 		return "redirect:/";

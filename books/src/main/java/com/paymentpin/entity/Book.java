@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.*;
 
 
 @Entity
@@ -14,16 +15,26 @@ public final class Book
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 	
+    @NotNull
+    @Pattern(regexp="^[a-zA-Z0-9_]+$")
 	private String title;
+	
+    @NotNull
+    @Pattern(regexp="^[a-zA-Z0-9_]+$")
 	private String author;
+    
+    @NotNull
+    @Pattern(regexp="^[a-zA-Z0-9_]+$")
     private String genre;
+    
+    
+    @NotNull
+    @Digits(message="message here", integer=32767, fraction = 0)
     private Integer pages;
+    
     private String year;
     private String rating;
-    
-    
-
-    
+      
 
 	public Integer getId() {
 		return id;
