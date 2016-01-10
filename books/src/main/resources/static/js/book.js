@@ -44,18 +44,14 @@ app.controller('searchController', function($scope, $http, $location,
 
 	$scope.bookData = {};
 
-	// $scope.listView = function(){
-	// $location.path("/search");
-	// }
-
 	$scope.processSearchForm = function() {
 		console.log(">>>>>>>>>>>>>>>>processSearchForm");
-		//$scope.bookData.href = "'/books/update?id="+$scope.bookData.id+"'";
+
 		// data from the form works !!
 		var aData = $scope.bookData.author;
 		var gData = $scope.bookData.genre;
 		var pData = $scope.bookData.pages;
-//		console.log(">>>>>>>>>>>>>>>>pData.valueOf() " + pData.valueOf());
+;
 		if(typeof pData === 'undefined'){
 			pData='0';
 		}
@@ -78,7 +74,6 @@ app.controller('searchController', function($scope, $http, $location,
 					console.log(">>>>>>>>>>>>>>>>books: "
 							+ angular.toJson($scope.books, 2));
 					bookData = angular.toJson($scope.books, 2);
-					// add the href to the result here somehow...
 
 					$scope.$emit('bookData', result);
 					$scope.bookData = {};
@@ -93,9 +88,6 @@ app.controller('addController', function($scope, $http, $location,
 
 	$scope.bookData = {};
 
-	// $scope.listView = function(){
-	// $location.path("/search");
-	// }
 
 	$scope.processAddForm = function() {
 		console.log(">>>>>>>>>>>>>>>>processAddForm");
