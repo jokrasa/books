@@ -141,8 +141,8 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
 		model.addAttribute("refData", refData);
  
 
-List<Book> books = bs.searchBooks(book.getAuthor(), book.getGenre(), book.getPages(), book.getYear(), book.getRating());
-System.out.println("after books = bs.searchBooks");
+		List<Book> books = bs.searchBooks(book.getAuthor(), book.getGenre(), book.getPages(), book.getYear(), book.getRating());
+		System.out.println("after books = bs.searchBooks");
 		
 		
 		model.addAttribute("books", books);
@@ -157,36 +157,41 @@ System.out.println("after books = bs.searchBooks");
 		//return "redirect:/search";
 		return "/search";
 
-	}
+	}	
 	
-	
-	// new endpoint for READ....
-	
+	//getting data from the server
 	@RequestMapping(value="/update",method=RequestMethod.GET)
 	public String update(@RequestParam int id,Model model){			//Map<String,Object> model) {
 		
 		System.out.println("UPDATE GET>>>>>>>>>>>>");
 		
-		List<Book> books = BookRepo.findById(id);
-		Book book = books.remove(0);
+		if(!model.containsAttribute("book")){
+			List<Book> books = BookRepo.findById(id);
+			Book book = books.remove(0);
+			model.addAttribute("book", book);
+			System.out.println("book.getTitle()="+book.getTitle());
+		}
+		else{
+			Map modelMap = model.asMap();
+			Object modelValue = modelMap.get("book");
+			Book b = (Book)modelValue;
+			System.out.println("model.containsAttribute('book'))= "+b.getTitle());
+		}
+		
 		
 		refData = new ReferenceData();
 		model.addAttribute("refData", refData);
-		
-		model.addAttribute("book", book);		
-		
-		///model.put("book", book);
-		System.out.println("book.getTitle()="+book.getTitle());
+	
 
 
 		return "/update";
 	}
 
 	// new endpoint for Update ...
-	
+	// post is creating data on the serverside
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	@Transactional
-	public String updateSubmit(Book book) {
+	public String updateSubmit(@Valid Book book, BindingResult bindingResult,Model model) {
 		System.out.println("UPDATE POST>>>>>>>>>>>>");	
 		//TEST the book....
 		System.out.println("title="+book.getTitle());
@@ -197,6 +202,14 @@ System.out.println("after books = bs.searchBooks");
 		System.out.println("year="+book.getYear());
 		System.out.println("id="+book.getId());
 		
+        if (bindingResult.hasErrors()) {
+        	System.out.println(">>>>>>>>bindingResult.HAS Errors()");
+        	model.addAttribute("book",book);
+            return "redirect:/update?id="+book.getId();
+        }
+        else{
+        	System.out.println(">>>>>>>>bindingResult.NO Errors()");
+        }
 		
 		
 		BookRepo.updateBookInfoById(book.getTitle(), book.getAuthor(), book.getGenre(), book.getPages(), book.getYear(), book.getRating(),book.getId());

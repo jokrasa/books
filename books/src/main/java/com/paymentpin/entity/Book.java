@@ -15,24 +15,27 @@ public final class Book
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 	
-    @NotNull
-    @Pattern(regexp="^[a-zA-Z0-9_]+$")
+    @NotNull(message="Title cannot be Null")
+    @Pattern(regexp="^[a-zA-Z0-9_]+$",message="Invalid Title")
 	private String title;
 	
-    @NotNull
-    @Pattern(regexp="^[a-zA-Z0-9_]+$")
+    @NotNull(message="Author cannot be Null")
+    @Pattern(regexp="^[a-zA-Z0-9_]+$",message="Invalid Author")
 	private String author;
     
-    @NotNull
-    @Pattern(regexp="^[a-zA-Z0-9_]+$")
+    @NotNull(message="Genre cannot be Null")
+    @Pattern(regexp="^[a-zA-Z0-9_]+$",message="Invalid Genre")
     private String genre;
     
     
-    @NotNull
-    @Digits(message="message here", integer=32767, fraction = 0)
+    @NotNull(message="pages cannot be null")
+    @Digits(message="invalid format for pages",integer=32767, fraction = 0)
     private Integer pages;
     
+    @NotNull
     private String year;
+    
+    @NotNull
     private String rating;
       
 

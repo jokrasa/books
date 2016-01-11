@@ -11,39 +11,92 @@
     <h2>Books UPD</h2>
 
 						   
- <form id = "upd" action="#" th:action="@{/update}" th:object="${book}" method="post">
-      <input type="hidden" name="id" id="id" th:field= "*{id}" ng-model="id"/> 
-      <label for="title">Book:</label>
-      <input type="text" name="title" id="title" th:field= "*{title}" ng-model="title"/> <br/>    
-      <label for="author">Author:</label>
-      <input type="text" name="author" id="author" th:field= "*{author}" ng-model="author"/> <br/>
-      <label for="genre">Genre:</label>
-      <input type="text" name="genre" id="genre" th:field= "*{genre}" ng-model="genre"/> <br/>
-      <label for="pages">Page #:</label>
-      <input type="text" name="pages" id="pages" th:field= "*{pages}" ng-model="pages"/> <br/>
-<!--       <label for="year">Year:</label> -->
-<!--       <input type="text" name="year" id="year" th:field= "*{year}" ng-model="year"/> <br/> -->
-<!--       <label for="rating">Rating:</label> -->
-<!--       <input type="text" name="rating" id="rating" th:field= "*{rating}" ng-model="rating"/> <br/> -->
+<!--  <form id = "upd" action="#" th:action="@{/update}" th:object="${book}" method="post"> -->
+<!--       <input type="hidden" name="id" id="id" th:field= "*{id}" ng-model="id"/>  -->
+<!--       <label for="title">Book:</label> -->
+<!--       <input type="text" name="title" id="title" th:field= "*{title}" ng-model="title"/> <br/>     -->
+<!--       <label for="author">Author:</label> -->
+<!--       <input type="text" name="author" id="author" th:field= "*{author}" ng-model="author"/> <br/> -->
+<!--       <label for="genre">Genre:</label> -->
+<!--       <input type="text" name="genre" id="genre" th:field= "*{genre}" ng-model="genre"/> <br/> -->
+<!--       <label for="pages">Page #:</label> -->
+<!--       <input type="text" name="pages" id="pages" th:field= "*{pages}" ng-model="pages"/> <br/> -->
       
-		<label th:for="*{year}">Year</label>
+<!-- 		<label th:for="*{year}">Year</label> -->
 		
-	    <select th:field="*{year}" ng-model="year">
-	  	<option th:each="selectItem: ${refData.years}" 
-	          th:value="${selectItem.value}" 
-	          th:text="${selectItem.label}">year</option>
-		</select>			
+<!-- 	    <select th:field="*{year}" ng-model="year"> -->
+<!-- 	  	<option th:each="selectItem: ${refData.years}"  -->
+<!-- 	          th:value="${selectItem.value}"  -->
+<!-- 	          th:text="${selectItem.label}">year</option> -->
+<!-- 		</select>			 -->
 		
-			<label th:for="*{rating}">rating</label>
-			<select th:field="*{rating}" ng-model="year">
-		  	<option th:each="selectItem: ${refData.rating}" 
-		          th:value="${selectItem.value}" 
-		          th:text="${selectItem.label}">rating</option>
-			</select>      
+<!-- 			<label th:for="*{rating}">rating</label> -->
+<!-- 			<select th:field="*{rating}" ng-model="year"> -->
+<!-- 		  	<option th:each="selectItem: ${refData.rating}"  -->
+<!-- 		          th:value="${selectItem.value}"  -->
+<!-- 		          th:text="${selectItem.label}">rating</option> -->
+<!-- 			</select>       -->
       
       
-      <input type="submit"></input>
-    </form>
+<!--       <input type="submit"></input> -->
+<!--     </form> -->
+ 
+ 	<form name = "updForm" action="#" th:action="@{/update}" th:object="${book}" method="post">
+		<table>
+			<tr>
+				<td><input type="hidden" name="id" id="id" th:field= "*{id}" /></td>	
+			</tr>
+			<tr>
+				<td><label for="*{title}">Book:</label></td>
+				<td><input type="text" th:field="*{title}" /></td>
+				<td th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name
+					Error</td>
+			</tr>
+			<tr>
+				<td><label for="*{author}">Author:</label></td>
+				<td><input type="text" th:field="*{author}" /></td>
+				<td th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author
+					Error</td>
+			</tr>
+			<tr>
+				<td><label for="*{genre}">Genre:</label></td>
+				<td><input type="text" th:field="*{genre}" /></td>
+				<td th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}">genre
+					Error</td>
+			</tr>
+			<tr>
+				<td><label for="*{pages}">Pages:</label></td>
+				<td><input type="text" th:field="*{pages}" /></td>
+				<td th:if="${#fields.hasErrors('pages')}" th:errors="*{pages}">pages
+					Error</td>
+			</tr>
+			<tr>
+				<td><label th:for="*{year}">Year:</label></td>
+				<td><select th:field="*{year}" ng-model="bookData.year">
+						<option th:each="selectItem: ${refData.years}"
+							th:value="${selectItem.value}" th:text="${selectItem.label}">year</option>
+				</select></td>
+				<td th:if="${#fields.hasErrors('year')}" th:errors="*{year}">year
+					Error</td>
+			</tr>
+			<tr>
+				<td><label th:for="*{rating}">Rating:</label></td>
+				<td><select th:field="*{rating}" ng-model="bookData.rating">
+						<option th:each="selectItem: ${refData.rating}"
+							th:value="${selectItem.value}" th:text="${selectItem.label}">rating</option>
+				</select></td>
+				<td th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}">rating
+					Error</td>
+			</tr>
+			<tr>
+				<td><button type="submit">Submit</button></td>
+			</tr>
+		</table>
+
+	</form>
+ 
+ 
+ 
     
     
 
