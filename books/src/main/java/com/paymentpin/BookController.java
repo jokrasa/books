@@ -58,6 +58,7 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
 		model.addAttribute("book", new Book());
 		
 		List<Book> books = BookRepo.findAll();
+		// the validated book...
 		model.addAttribute("books", books);
 		for(Book b : books){
 			 System.out.println("book = "+b.getTitle());
@@ -164,7 +165,7 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
 	@RequestMapping(value="/update",method=RequestMethod.GET)
 	public String update(@RequestParam int id,Model model){			//Map<String,Object> model) {
 		
-		System.out.println("UPDATE GET>>>>>>>>>>>>");
+		System.out.println("UPDATE 1st GET>>>>>>>>>>>>");
 		
 		if(!model.containsAttribute("book")){
 			List<Book> books = BookRepo.findById(id);
@@ -187,6 +188,28 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
 
 		return "/update";
 	}
+	
+	//getting data from the server
+	@RequestMapping(value="/updateErr",method=RequestMethod.GET)
+	public String update(@Valid Book book, BindingResult bindingResult,Model model){			//Map<String,Object> model) {
+		
+		System.out.println("UPDATE with errors GET>>>>>>>>>>>>");
+		
+
+//			Map modelMap = model.asMap();
+//			Object modelValue = modelMap.get("book");
+//			Book b = (Book)modelValue;
+//			System.out.println("model.containsAttribute('book'))= "+b.getTitle());
+	
+		
+		refData = new ReferenceData();
+		model.addAttribute("refData", refData);
+	
+
+
+		return "/update";
+	}	
+	
 
 	// new endpoint for Update ...
 	// post is creating data on the serverside
@@ -212,7 +235,8 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
         	
         	System.out.println(">>>>>>>>bindingResult.HAS Errors()");
         	model.addAttribute("book",book);
-            return "redirect:/update?id="+book.getId();
+        	//model.addAttribute("bindingResult",bindingResult);
+            return "redirect:/updateErr";
         }
         else{
         	System.out.println(">>>>>>>>bindingResult.NO Errors()");
@@ -220,6 +244,8 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
 		
 		
 		BookRepo.updateBookInfoById(book.getTitle(), book.getAuthor(), book.getGenre(), book.getPages(), book.getYear(), book.getRating(),book.getId());
+		
+		
 		return "redirect:/search";
 	}
 	
