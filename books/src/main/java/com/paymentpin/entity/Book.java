@@ -16,15 +16,15 @@ public final class Book
     private Integer id;
 	
     @NotNull(message="Title cannot be Null")
-    @Pattern(regexp="^[a-zA-Z0-9_]+$",message="Invalid Title")
+    @Pattern(regexp="^[a-zA-Z0-9_ ]+$",message="Invalid Title")
 	private String title;
 	
     @NotNull(message="Author cannot be Null")
-    @Pattern(regexp="^[a-zA-Z0-9_]+$",message="Invalid Author")
+    @Pattern(regexp="^[a-zA-Z0-9_ ]+$",message="Invalid Author")
 	private String author;
     
     @NotNull(message="Genre cannot be Null")
-    @Pattern(regexp="^[a-zA-Z0-9_]+$",message="Invalid Genre")
+    @Pattern(regexp="^[a-zA-Z0-9_ ]+$",message="Invalid Genre")
     private String genre;
     
     

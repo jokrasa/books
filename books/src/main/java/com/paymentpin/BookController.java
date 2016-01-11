@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -203,6 +204,12 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
 		System.out.println("id="+book.getId());
 		
         if (bindingResult.hasErrors()) {
+        	List<FieldError> errors = bindingResult.getFieldErrors();
+        	for(FieldError e: errors){
+        		System.out.println(">>>>>>FieldError:  "+e.getField());
+        		
+        	}
+        	
         	System.out.println(">>>>>>>>bindingResult.HAS Errors()");
         	model.addAttribute("book",book);
             return "redirect:/update?id="+book.getId();
