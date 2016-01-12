@@ -163,52 +163,25 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
 	
 	//getting data from the server
 	@RequestMapping(value="/update",method=RequestMethod.GET)
-	public String update(@RequestParam int id,Model model){			//Map<String,Object> model) {
+	public String update(@RequestParam(value = "id", required=false)int id, @Valid Book book, BindingResult bindingResult,Model model){			//Map<String,Object> model) {
 		
 		System.out.println("UPDATE 1st GET>>>>>>>>>>>>");
 		
-		if(!model.containsAttribute("book")){
+		refData = new ReferenceData();
+		model.addAttribute("refData", refData);
+		
+		if(id!=0){
 			List<Book> books = BookRepo.findById(id);
-			Book book = books.remove(0);
+			book = books.remove(0);
 			model.addAttribute("book", book);
 			System.out.println("book.getTitle()="+book.getTitle());
 		}
-		else{
-			Map modelMap = model.asMap();
-			Object modelValue = modelMap.get("book");
-			Book b = (Book)modelValue;
-			System.out.println("model.containsAttribute('book'))= "+b.getTitle());
-		}
-		
-		
-		refData = new ReferenceData();
-		model.addAttribute("refData", refData);
-	
 
 
 		return "/update";
 	}
 	
-	//getting data from the server
-	@RequestMapping(value="/updateErr",method=RequestMethod.GET)
-	public String update(@Valid Book book, BindingResult bindingResult,Model model){			//Map<String,Object> model) {
-		
-		System.out.println("UPDATE with errors GET>>>>>>>>>>>>");
-		
-
-//			Map modelMap = model.asMap();
-//			Object modelValue = modelMap.get("book");
-//			Book b = (Book)modelValue;
-//			System.out.println("model.containsAttribute('book'))= "+b.getTitle());
 	
-		
-		refData = new ReferenceData();
-		model.addAttribute("refData", refData);
-	
-
-
-		return "/update";
-	}	
 	
 
 	// new endpoint for Update ...
@@ -232,21 +205,19 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
         		System.out.println(">>>>>>FieldError:  "+e.getField());
         		
         	}
-        	
+    		refData = new ReferenceData();
+    		model.addAttribute("refData", refData);
         	System.out.println(">>>>>>>>bindingResult.HAS Errors()");
-        	model.addAttribute("book",book);
-        	//model.addAttribute("bindingResult",bindingResult);
-            return "redirect:/updateErr";
+        	return "/update";
         }
-        else{
+
         	System.out.println(">>>>>>>>bindingResult.NO Errors()");
-        }
+		
+        	BookRepo.updateBookInfoById(book.getTitle(), book.getAuthor(), book.getGenre(), book.getPages(), book.getYear(), book.getRating(),book.getId());
 		
 		
-		BookRepo.updateBookInfoById(book.getTitle(), book.getAuthor(), book.getGenre(), book.getPages(), book.getYear(), book.getRating(),book.getId());
-		
-		
-		return "redirect:/search";
+        	return "redirect:/search";
+
 	}
 	
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
