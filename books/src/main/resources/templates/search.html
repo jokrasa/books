@@ -23,7 +23,7 @@
 <form id = "search" th:object="${book}" method="post" ng-controller="searchController" ng-submit="processSearchForm()">
 
  			<!-- table -->
-			<table border="1">
+			<table>
 				<!-- 1tr -->
 				<tr >
 					<td></td>
@@ -79,16 +79,11 @@
 						          th:text="${selectItem.label}">rating</option>
 							</select>
 					</td>
-				</tr>
-				<!-- close  5tr -->								
+				</tr>								
 			 </table>
-			 <!-- close table --> 
 	  
                     					   
 <input type="submit" value="Submit" />
-
-
-
 
     </form>
    
@@ -105,7 +100,6 @@
 		<span th:text="DELETE" style="cursor: pointer" th:onclick="'javascript:deleteClicked(\'' + ${book.id} + '\');'">DELETE</span>
       </li>
     </ul>
-  
 
    
        <a th:href="@{/}">ADD NEW BOOK</a>

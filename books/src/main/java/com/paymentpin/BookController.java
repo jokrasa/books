@@ -22,7 +22,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.paymentpin.entity.Book;
 
-
+/**
+ * 
+ * @author jokrasa
+ * Main Controller for CRUD operations
+ *
+ */
 
 @Controller
 @RequestMapping("/")
@@ -40,12 +45,11 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
 		
 	}
 	
-
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/home").setViewName("home");
-//    }
-	
+	/**
+	 * loads list of books and form to add a book
+	 * @param model
+	 * @return String path to self
+	 */
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public String home(Model model) {
@@ -65,36 +69,51 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
 		}
 
 		return "home";
-	}	
+	}
+	
+	/**
+	 * adding a validated book
+	 * 
+	 * @param book
+	 * @param bindingResult
+	 * @param model
+	 * @return
+	 */
 
 	@RequestMapping(method=RequestMethod.POST)
 	public String submit(@Valid Book book,BindingResult bindingResult, Model model ) {
 		System.out.println(">>>>>>>>submit(@Valid Book book,Model model, BindingResult bindingResult)");
 		//TEST the book....
-		System.out.println("title="+book.getTitle());
-		System.out.println("author="+book.getAuthor());
-		System.out.println("genre="+book.getGenre());
-		System.out.println("pages="+book.getPages());
-		System.out.println("rating="+book.getRating());
-		System.out.println("year="+book.getYear());
+//		System.out.println("title="+book.getTitle());
+//		System.out.println("author="+book.getAuthor());
+//		System.out.println("genre="+book.getGenre());
+//		System.out.println("pages="+book.getPages());
+//		System.out.println("rating="+book.getRating());
+//		System.out.println("year="+book.getYear());
 		
 		
 		refData = new ReferenceData();
 		model.addAttribute("refData", refData);
 		
         if (bindingResult.hasErrors()) {
-        	System.out.println(">>>>>>>>bindingResult.HAS Errors()");
+        	//System.out.println(">>>>>>>>bindingResult.HAS Errors()");
             return "home";
         }
         else{
-        	System.out.println(">>>>>>>>bindingResult.NO Errors()");
+        	//System.out.println(">>>>>>>>bindingResult.NO Errors()");
         }
 		
 		BookRepo.save(book);
 		return "redirect:/";
 	}
 
-	// does a read...
+	/**
+	 * Main search page with grid
+	 * submits via angularjs and restangular lib
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/search",method=RequestMethod.GET)
 	public String searchForm(Model model){				//Map<String,Object> model) {
 		
@@ -116,11 +135,17 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
 	}	
 	
 	
-	/// does submit form...
+	/**
+	 * angularjs loads the grid and back to self
+	 * 
+	 * @param book
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value ="/search",method=RequestMethod.POST)
 	public String searchSubmit(@ModelAttribute Book book, Model model) {
 		
-		System.out.println("SEARCHING back To SEARCH>>>>>>>>>>>>");
+		//System.out.println("SEARCHING back To SEARCH>>>>>>>>>>>>");
 		
 		//TEST the book....
 		System.out.println("title="+book.getTitle());
@@ -144,28 +169,35 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
  
 
 		List<Book> books = bs.searchBooks(book.getAuthor(), book.getGenre(), book.getPages(), book.getYear(), book.getRating());
-		System.out.println("after books = bs.searchBooks");
+		//System.out.println("after books = bs.searchBooks");
 		
 		
 		model.addAttribute("books", books);
 		
-		if(books!=null){
-			for(Book b : books){
-				System.out.println(b.getTitle());
-			}
-		}
-		
+//		if(books!=null){
+//			for(Book b : books){
+//				System.out.println(b.getTitle());
+//			}
+//		}
 
-		//return "redirect:/search";
 		return "/search";
 
 	}	
 	
-	//getting data from the server
+
+	/**
+	 * update a valid book
+	 * 
+	 * @param id
+	 * @param book
+	 * @param bindingResult
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/update",method=RequestMethod.GET)
 	public String update(@RequestParam(value = "id", required=false)int id, @Valid Book book, BindingResult bindingResult,Model model){			//Map<String,Object> model) {
 		
-		System.out.println("UPDATE 1st GET>>>>>>>>>>>>");
+		//System.out.println("UPDATE 1st GET>>>>>>>>>>>>");
 		
 		refData = new ReferenceData();
 		model.addAttribute("refData", refData);
@@ -184,34 +216,40 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
 	
 	
 
-	// new endpoint for Update ...
-	// post is creating data on the serverside
+/**
+ * submits the update for validation then persists
+ * 
+ * @param book
+ * @param bindingResult
+ * @param model
+ * @return
+ */
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	@Transactional
 	public String updateSubmit(@Valid Book book, BindingResult bindingResult,Model model) {
-		System.out.println("UPDATE POST>>>>>>>>>>>>");	
+		//System.out.println("UPDATE POST>>>>>>>>>>>>");	
 		//TEST the book....
-		System.out.println("title="+book.getTitle());
-		System.out.println("author="+book.getAuthor());
-		System.out.println("genre="+book.getGenre());
-		System.out.println("pages="+book.getPages());
-		System.out.println("rating="+book.getRating());
-		System.out.println("year="+book.getYear());
-		System.out.println("id="+book.getId());
+//		System.out.println("title="+book.getTitle());
+//		System.out.println("author="+book.getAuthor());
+//		System.out.println("genre="+book.getGenre());
+//		System.out.println("pages="+book.getPages());
+//		System.out.println("rating="+book.getRating());
+//		System.out.println("year="+book.getYear());
+//		System.out.println("id="+book.getId());
 		
         if (bindingResult.hasErrors()) {
         	List<FieldError> errors = bindingResult.getFieldErrors();
-        	for(FieldError e: errors){
-        		System.out.println(">>>>>>FieldError:  "+e.getField());
-        		
-        	}
+//        	for(FieldError e: errors){
+//        		System.out.println(">>>>>>FieldError:  "+e.getField());
+//        		
+//        	}
     		refData = new ReferenceData();
     		model.addAttribute("refData", refData);
-        	System.out.println(">>>>>>>>bindingResult.HAS Errors()");
+        	//System.out.println(">>>>>>>>bindingResult.HAS Errors()");
         	return "/update";
         }
 
-        	System.out.println(">>>>>>>>bindingResult.NO Errors()");
+        	//System.out.println(">>>>>>>>bindingResult.NO Errors()");
 		
         	BookRepo.updateBookInfoById(book.getTitle(), book.getAuthor(), book.getGenre(), book.getPages(), book.getYear(), book.getRating(),book.getId());
 		
@@ -219,7 +257,11 @@ public class BookController{	//extends WebMvcConfigurerAdapter {
         	return "redirect:/search";
 
 	}
-	
+	/**
+	 * to delete a book then back to search page
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	@Transactional
 	public String updateDelete(@RequestParam int id) {

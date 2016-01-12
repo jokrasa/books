@@ -40,14 +40,14 @@ public class JpaBookService implements BookService {
 	}
 
 	public List<Book> searchBooks(String author, String genre, Integer pages, String year, String rating){
-    	System.out.println(">>>>>JpaBookService.searchBooks");
+    	//System.out.println(">>>>>JpaBookService.searchBooks");
     	List<Predicate> predList = new LinkedList<Predicate>();
     	
-			System.out.println(">>>>>author is: "+author);
-			System.out.println(">>>>>genre is: "+genre);
-			System.out.println(">>>>>pages is: "+pages);
-			System.out.println(">>>>>year is: "+year);
-			System.out.println(">>>>>rating is: "+rating);
+//			System.out.println(">>>>>author is: "+author);
+//			System.out.println(">>>>>genre is: "+genre);
+//			System.out.println(">>>>>pages is: "+pages);
+//			System.out.println(">>>>>year is: "+year);
+//			System.out.println(">>>>>rating is: "+rating);
 
 
 		    
@@ -73,18 +73,18 @@ public class JpaBookService implements BookService {
   		}
 		Predicate[] predArray = new Predicate[predList.size()];
 		predList.toArray(predArray);
-		for(Predicate s :predArray){
-			System.out.println("predicate: "+s.getExpressions().toString());
-		}
+//		for(Predicate s :predArray){
+//			System.out.println("predicate: "+s.getExpressions().toString());
+//		}
 		c.where(predArray);
     	
 
 		TypedQuery<Book> q = em.createQuery(c);
 		List<Book> result = q.getResultList();
 		
-		for(Book book: result){
-			System.out.println(">>>>>>>FINALLY a BOOK?! "+book.getTitle());
-		}
+//		for(Book book: result){
+//			System.out.println(">>>>>>>FINALLY a BOOK?! "+book.getTitle());
+//		}
 
 		return result;
 	

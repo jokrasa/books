@@ -10,7 +10,11 @@ import org.springframework.data.repository.query.Param;
 
 import com.paymentpin.entity.Book;
 
-
+/**
+ * JPA repository
+ * @author jokrasa
+ *
+ */
 public interface BookRepository extends CrudRepository<Book, String> {
 	
 //    private String id;
@@ -30,11 +34,6 @@ public interface BookRepository extends CrudRepository<Book, String> {
     
     Long deleteById(int id);
     
-    /*
-     * Search Criteria
-     * 
-     * 
-     */
     
     @Query("select distinct author from Book")
     ArrayList<String> findAllDistinctAuthor();
@@ -45,8 +44,7 @@ public interface BookRepository extends CrudRepository<Book, String> {
     @Query("select distinct year from Book")
     ArrayList<String> findAllDistinctYear();
   
-    
-    // the year cannot be empty so by default something
+
     @Query("select b from Book b where b.author =  ?1 "
     		+ "and b.genre = ?2  "
     		+ "and b.pages = ?3 "
@@ -55,15 +53,6 @@ public interface BookRepository extends CrudRepository<Book, String> {
     List<Book> findAllBySearch(@Param("author") String author,@Param("genre") String genre,@Param("pages") Integer pages,
     					@Param("year") String year,
     					@Param("rating") String rating);
-    
-    
-    
-    
-//    
-//    // THIS ONE WORKS!!!
-//    @Query("select b from Book b where b.author = ?1 and b.genre = ?2 and b.pages = any(select pages from Book)")
-//    List<Book> findAllWhereLikeOrderBy(@Param("author") String author,
-//    								   @Param("genre") String genre);
     
 
     

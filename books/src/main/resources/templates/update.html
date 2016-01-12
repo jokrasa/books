@@ -9,37 +9,6 @@
 
   <body>
     <h2>Books UPD</h2>
-
-						   
-<!--  <form id = "upd" action="#" th:action="@{/update}" th:object="${book}" method="post"> -->
-<!--       <input type="hidden" name="id" id="id" th:field= "*{id}" ng-model="id"/>  -->
-<!--       <label for="title">Book:</label> -->
-<!--       <input type="text" name="title" id="title" th:field= "*{title}" ng-model="title"/> <br/>     -->
-<!--       <label for="author">Author:</label> -->
-<!--       <input type="text" name="author" id="author" th:field= "*{author}" ng-model="author"/> <br/> -->
-<!--       <label for="genre">Genre:</label> -->
-<!--       <input type="text" name="genre" id="genre" th:field= "*{genre}" ng-model="genre"/> <br/> -->
-<!--       <label for="pages">Page #:</label> -->
-<!--       <input type="text" name="pages" id="pages" th:field= "*{pages}" ng-model="pages"/> <br/> -->
-      
-<!-- 		<label th:for="*{year}">Year</label> -->
-		
-<!-- 	    <select th:field="*{year}" ng-model="year"> -->
-<!-- 	  	<option th:each="selectItem: ${refData.years}"  -->
-<!-- 	          th:value="${selectItem.value}"  -->
-<!-- 	          th:text="${selectItem.label}">year</option> -->
-<!-- 		</select>			 -->
-		
-<!-- 			<label th:for="*{rating}">rating</label> -->
-<!-- 			<select th:field="*{rating}" ng-model="year"> -->
-<!-- 		  	<option th:each="selectItem: ${refData.rating}"  -->
-<!-- 		          th:value="${selectItem.value}"  -->
-<!-- 		          th:text="${selectItem.label}">rating</option> -->
-<!-- 			</select>       -->
-      
-      
-<!--       <input type="submit"></input> -->
-<!--     </form> -->
  
  	<form name = "updForm" action="#" th:action="@{/update}" th:object="${book}" method="post">
 		<table>
@@ -93,25 +62,7 @@
 			</tr>
 		</table>
 
-	</form>
- 
- 
- 
-    
-    
-
-    <ul th:each="book : ${books}">
-      <li>
-        <span th:text="${book.title}">Title</span>
-        <span th:text="${book.author}">Author</span>
-        <span th:text="${book.genre}">Genre</span> :
-        <span th:text="${book.pages}">pages</span>,
-        <span th:text="${book.year}">year</span>
-        <span th:text="${book.rating}">rating</span>
-
-      </li>
-    </ul>
-    
+	</form>    
    
     <a th:href="@{/search}">SEARCH</a>
     

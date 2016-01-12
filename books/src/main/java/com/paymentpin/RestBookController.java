@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.fge.jackson.JsonLoader;
 import com.paymentpin.entity.Book;
-
+/**
+ * 
+ * @author jokrasa
+ *
+ */
 @RestController
 @RequestMapping("/rest")
 public class RestBookController {
@@ -30,7 +34,11 @@ public class RestBookController {
 	}
 	
 	
-	
+	/**
+	 * Following Rest Endpoints for CRUD as requried
+	 * @param book
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public Book addBook(@RequestBody Book book) {
@@ -50,7 +58,16 @@ public class RestBookController {
 	    //Book book = this.BookRepo.findById(bookId);
 	    this.BookRepo.deleteById(bookId);
 	}
-	
+
+	/**
+	 * to load the grid Using Restangular
+	 * @param author
+	 * @param genre
+	 * @param pages
+	 * @param year
+	 * @param rating
+	 * @return
+	 */
 	@RequestMapping(value = "/{author}/{genre}/{pages}/{year}/{rating}",method = RequestMethod.GET)
 	@ResponseBody
 	public List<Book> searchBooks(@PathVariable String author,
@@ -58,13 +75,13 @@ public class RestBookController {
 								  @PathVariable Integer pages,
 								  @PathVariable String year,
 								  @PathVariable String rating) {
-		System.out.println(">>>>>>>>restContr searchBooks");
-
-		System.out.println(">>>>>>>>author: "+author);
-		System.out.println(">>>>>>>>genre: "+genre);
-		System.out.println(">>>>>>>>year: "+year);
-		System.out.println(">>>>>>>>pages: "+pages);
-		System.out.println(">>>>>>>>rating: "+rating);
+//		System.out.println(">>>>>>>>restContr searchBooks");
+//
+//		System.out.println(">>>>>>>>author: "+author);
+//		System.out.println(">>>>>>>>genre: "+genre);
+//		System.out.println(">>>>>>>>year: "+year);
+//		System.out.println(">>>>>>>>pages: "+pages);
+//		System.out.println(">>>>>>>>rating: "+rating);
 
 
 		List<Book> books = this.bs.searchBooks(author, genre, pages, year, rating);

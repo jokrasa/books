@@ -1,6 +1,7 @@
 package com.paymentpin.entity;
 
 
+
 public class SelectItem {
 
 	private static final long serialVersionUID = 87678231141L;

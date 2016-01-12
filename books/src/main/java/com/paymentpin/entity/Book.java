@@ -6,7 +6,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.*;
 
-
+/**
+ * The main entity
+ * uses javax.validation for the template pages
+ * @author jokrasa
+ *
+ */
 @Entity
 public final class Book
 {

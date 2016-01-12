@@ -6,7 +6,11 @@ import java.util.List;
 
 import com.paymentpin.entity.SelectItem;
 
-//@Service
+/**
+ * Reusable for selects throughout the site
+ * @author jokrasa
+ *
+ */
 public class ReferenceData {
 
 
